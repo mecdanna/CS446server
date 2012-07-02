@@ -53,7 +53,6 @@
 
 
 
-
 using namespace std;
 
 
@@ -147,6 +146,10 @@ const char* GetWinsockErrorString( int err )
 
 #endif // WIN32
 
+static int lowercase( int whichChar ) {
+	if (whichChar < 65 || whichChar > 90) return whichChar;
+	return (whichChar + 32);
+}
 
 // return true if socket has data waiting to be read
 bool datawaiting( int sock )
@@ -511,7 +514,7 @@ Response::Response( const char* method, Connection& conn ) :
 const char* Response::getheader( const char* name ) const
 {
 	std::string lname( name );
-	std::transform( lname.begin(), lname.end(), lname.begin(), tolower );
+	std::transform( lname.begin(), lname.end(), lname.begin(), lowercase );
 
 	std::map< std::string, std::string >::const_iterator it = m_Headers.find( lname );
 	if( it == m_Headers.end() )
@@ -772,7 +775,7 @@ void Response::FlushHeader()
 	std::string header;
 	std::string value;
 	while( *p && *p != ':' )
-		header += tolower( *p++ );
+		header += lowercase( *p++ );
 
 	// skip ':'
 	if( *p )
