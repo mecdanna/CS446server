@@ -28,6 +28,10 @@ public:
 	byte& operator()(int x, int y) {
 		return data[x+y*m_width];
 	}
+	
+	byte& at(int x, int y) {
+		return data[x+y*m_width];
+	}
 
 	const byte* scanline(int y) {
 		return data + y*m_width;

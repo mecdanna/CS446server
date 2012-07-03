@@ -11,8 +11,10 @@
 #include "abstractImage.h"
 
 class BinarizedImage: public AbstractImage {
+	void binarize();
+	
 public:
-	BinarizedImage(const AbstractImage &img, int thmin);
+	BinarizedImage(const AbstractImage& img, int thmin = 228);
 	void invert();
 
 	AbstractImage toImage() { return (AbstractImage)*this;}

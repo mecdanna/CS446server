@@ -2,7 +2,8 @@
 
 using namespace std;
 
-ImagePreprocessor::ImagePreprocessor(rawData data, ImagePreprocessor::decompressType type) {
+ImagePreprocessor::ImagePreprocessor(rawData data, ImagePreprocessor::decompressType type, std::vector<AbstractImage>& images) :
+	images(images) {
 }
 
 void ImagePreprocessor::_CBR(rawData data) {

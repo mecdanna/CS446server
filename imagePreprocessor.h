@@ -15,7 +15,7 @@
 typedef void* rawData;
 
 class ImagePreprocessor {
-	std::vector<AbstractImage>* images;
+	std::vector<AbstractImage>& images;
 
 	void _CBR(rawData data);
 	void _CBZ(rawData data);
@@ -25,10 +25,8 @@ public:
 		decompressType_CBR = 0,
 		decompressType_CBZ
 	};
-	ImagePreprocessor(rawData data, decompressType type);
+	ImagePreprocessor(rawData data, decompressType type, std::vector<AbstractImage>& images);
 	~ImagePreprocessor();
-
-	std::vector<AbstractImage>* getImages() {return images;}
 
 };
 
