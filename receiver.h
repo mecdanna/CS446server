@@ -10,7 +10,7 @@
 
 #include "HappyHttp/happyhttp.h"
 #include "queue.h"
-#include "httpStruct.h"
+#include "request.h"
 
 class Receiver {
 	Queue& queue;

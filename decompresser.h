@@ -5,15 +5,17 @@
  *      Author: mike
  */
 
-#ifndef DECOMPRESSER_H_
-#define DECOMPRESSER_H_
+#ifndef IMAGEPREPROCESSOR_H_
+#define IMAGEPREPROCESSOR_H_
 
 #include <list>
 #include <vector>
 #include "abstractImage.h"
 
-class Decompresser {
-	std::vector<AbstractImage> images;
+typedef void* rawData;
+
+class ImagePreprocessor {
+	std::vector<AbstractImage>& images;
 
 	void _CBR(void* data);
 	void _CBZ(void* data);
@@ -23,12 +25,12 @@ public:
 		decompressType_CBR = 0,
 		decompressType_CBZ
 	};
-	Decompresser(void* data, decompressType type);
-	~Decompresser();
+	ImagePreprocessor(rawData data, decompressType type);
+	~ImagePreprocessor();
 
-	std::vector<AbstractImage>* getImages() {return &images;}
+	std::vector<AbstractImage>* getImages() {return images;}
 
 };
 
 
-#endif /* DECOMPRESSER_H_ */
+#endif /* IMAGEPREPROCESSOR_H_ */

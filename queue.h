@@ -10,16 +10,18 @@
 
 #include <queue>
 #include <pthread.h>
-#include "httpStruct.h"
+#include "request.h"
+
+typedef void* rawData;
 
 class Queue {
-	std::queue<void*> m_dataQueue;
-	std::queue<HttpRequest> m_HttpQueue;
+	std::queue<rawData> m_dataQueue;
+	std::queue<Request> m_RequestQueue;
 	pthread_rwlock_t m_mutex;
 
 
 public:
-	void enqueue(void* data);
+	void enqueue(rawData data);
 	void* dequeue();
 };
 
