@@ -12,10 +12,8 @@
 #include "binarizedImage.h"
 #include "comicFrames.h"
 
-typedef AbstractImage AI;
-
 class FrameDetect {
-	BinarizedImage *bimg;
+	BinarizedImage* bimg;
 	int page;
 	int ccolour; //contour colour
 	int bcolour; //background colour
@@ -26,13 +24,13 @@ protected:
     struct Point {
 		int x, y;
 		Point(int x, int y): x(x), y(y) {}
-		bool operator==(const Point &p) const { return x == p.x && y == p.y; }
+		bool operator==(const Point& p) const { return x == p.x && y == p.y; }
     };
 
     void addWhiteBorders();
     static int determineBackground(const BinarizedImage &img);
 
-    inline static bool nextPoint(int &x, int &y, int pos) {
+    inline static bool nextPoint(int& x, int& y, int pos) {
 		switch (pos)
 		{
 			case 0: ++x; break;
@@ -50,7 +48,7 @@ protected:
 		}
 	}
 
-    inline bool nextPoint(int &offset, int pos) {
+    inline bool nextPoint(int& offset, int pos) {
 		switch (pos)
 		{
 			case 0: ++offset; break;
@@ -68,16 +66,16 @@ protected:
 		}
 	}
 
-    void contourTracking(AI *img, int x, int y, int initialPos, int label);
-    Point tracer(AI *img, int x, int y, int &pos, int label);
-    ComicFrames frames(AI *img) const;
+    void contourTracking(AbstractImage* img, int x, int y, int initialPos, int label);
+    Point tracer(AbstractImage* img, int x, int y, int pos, int label);
+    ComicFrames frames(AbstractImage* img) const;
     ComicFrames process(int px, int py, int pw, int ph);
 public:
 
-    FrameDetect(const AI &page);
+    FrameDetect(const AbstractImage &page);
     ~FrameDetect();
     ComicFrames process();
-    void dump(const AI *img);
+    void dump(const AbstractImage* img);
 
 };
 

@@ -8,7 +8,7 @@
 #ifndef COMICFRAMES_H_
 #define COMICFRAMES_H_
 
-#include <list>
+#include <vector>
 
 struct comicFrame {
 	comicFrame() {}
@@ -29,7 +29,7 @@ class ComicFrames {
 	int m_page;
 	int m_pageWidth;
 	int m_pageHeight;
-	std::list<comicFrame> m_frames;
+	std::vector<comicFrame> m_frames;
 public:
 	ComicFrames(int page = -1, int width = 0, int height = 0);
 	~ComicFrames();
