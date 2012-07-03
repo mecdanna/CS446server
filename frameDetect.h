@@ -13,12 +13,15 @@
 #include "comicFrames.h"
 
 class FrameDetect {
+	AbstractImage& rimg;
 	BinarizedImage* bimg;
 	int page;
 	int ccolour; //contour colour
 	int bcolour; //background colour
 	int label;
 	int w, h;
+	
+	void cleanUp();
 protected:
 
     struct Point {
@@ -64,18 +67,16 @@ protected:
 	}
 
 	void addWhiteBorders();
-    static int determineBackground(const BinarizedImage &img);
-    void contourTracking(AbstractImage* img, int x, int y, int initialPos, int label);
-    Point tracer(AbstractImage* img, int x, int y, int pos, int label);
-    ComicFrames frames(AbstractImage* img) const;
+    int determineBackground(BinarizedImage& img);
+    void contourTracking(AbstractImage& labelData, int x, int y, int initialPos, int lbl);
+    Point tracer(AbstractImage& labelData, int x, int y, int pos, int lbl);
+    ComicFrames frames(AbstractImage& labelData) const;
     ComicFrames process(int px, int py, int pw, int ph);
 public:
 
-    FrameDetect(const AbstractImage &page);
+    FrameDetect(AbstractImage& page, int pageNum);
     ~FrameDetect();
     ComicFrames process();
-    void dump(const AbstractImage* img);
-
 };
 
 
