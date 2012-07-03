@@ -27,9 +27,6 @@ protected:
 		bool operator==(const Point& p) const { return x == p.x && y == p.y; }
     };
 
-    void addWhiteBorders();
-    static int determineBackground(const BinarizedImage &img);
-
     inline static bool nextPoint(int& x, int& y, int pos) {
 		switch (pos)
 		{
@@ -66,6 +63,8 @@ protected:
 		}
 	}
 
+	void addWhiteBorders();
+    static int determineBackground(const BinarizedImage &img);
     void contourTracking(AbstractImage* img, int x, int y, int initialPos, int label);
     Point tracer(AbstractImage* img, int x, int y, int pos, int label);
     ComicFrames frames(AbstractImage* img) const;

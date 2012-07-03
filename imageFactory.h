@@ -13,9 +13,9 @@
 typedef void* rawPic;
 
 class ImageFactory {
-	_PNG(rawPic pic);
-	_BMP(rawPic pic);
-	_JPEG(rawPic pic);
+	void _PNG(rawPic pic);
+	void _BMP(rawPic pic);
+	void _JPEG(rawPic pic);
 	
 	AbstractImage* initPic(int w, int h);
 	void FinalizePic(AbstractImage* img);
@@ -24,7 +24,7 @@ public:
 		imageType_PNG = 0,
 		imageType_BMP,
 		imageType_JPEG
-	}
+	};
 	ImageFactory();
 	~ImageFactory();
 	
