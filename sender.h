@@ -10,6 +10,7 @@
 
 #include "HappyHttp/happyhttp.h"
 #include "request.h"
+#include "comicFrames.h"
 #include <vector>
 
 class Sender {
