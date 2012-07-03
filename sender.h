@@ -16,7 +16,7 @@ public:
 	Sender();
 	~Sender();
 
-	void sendToClient(HttpStruct request, std::vector<ComicFrames> frames);
+	void sendToClient(HttpRequest request, std::vector<ComicFrames> frames);
 };
 
 

@@ -1,12 +1,8 @@
-/*
- * main.cpp
- *
- *  Created on: 2012-07-02
- *      Author: mike
- */
+#include "receiver.h"
+#include "queue.h"
+#include "worker.h"
 
-int main() {
+int main(int argc, char **argv)
+{
 	return 0;
 }
-
-

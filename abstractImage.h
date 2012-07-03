@@ -13,8 +13,8 @@ typedef unsigned int byte;
 class AbstractImage {
 protected:
 	byte *data;
-	int m_width;
-	int m_height;
+	unsigned int m_width;
+	unsigned int m_height;
 
 public:
 	AbstractImage(int w, int h) : m_width(w), m_height(h) {
@@ -29,7 +29,7 @@ public:
 		return data[x+y*m_width];
 	}
 
-	const byte& scanline(int y) {
+	const byte* scanline(int y) {
 		return data + y*m_width;
 	}
 

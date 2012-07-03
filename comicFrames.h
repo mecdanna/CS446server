@@ -19,7 +19,7 @@ struct comicFrame {
 	int height() {return h;}
 	int xPos() {return x;}
 	int yPos() {return y;}
-	int label() {return label;}
+	int label() {return lbl;}
 
 private:
 	int x, y, w, h, lbl;

@@ -15,7 +15,7 @@ public:
 	BinarizedImage(const AbstractImage &img, int thmin);
 	void invert();
 
-	AbstractImage toImage() { return (AbstractImage)*self;}
+	AbstractImage toImage() { return (AbstractImage)*this;}
 };
 
 

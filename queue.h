@@ -13,8 +13,8 @@
 #include "httpStruct.h"
 
 class Queue {
-	queue<void*> m_dataQueue;
-	queue<HttpStruct> m_HttpQueue;
+	std::queue<void*> m_dataQueue;
+	std::queue<HttpRequest> m_HttpQueue;
 	pthread_rwlock_t m_mutex;
 
 
