@@ -2,7 +2,7 @@
 
 using namespace std;
 
-void ImageFactory::FinalizePic(AbstractImage* img) {
+void ImageFactory::FinalizePic(AbstractImage<pixel>& img) {
 }
 
 ImageFactory::ImageFactory() {
@@ -17,10 +17,10 @@ void ImageFactory::_JPEG(rawPic pic) {
 void ImageFactory::_PNG(rawPic pic) {
 }
 
-AbstractImage* ImageFactory::initPic(int w, int h) {
+void ImageFactory::initPic(int w, int h, AbstractImage<pixel>& img) {
 }
 
-AbstractImage* ImageFactory::makeImage(rawPic pic, imageType type) {
+AbstractImage<pixel> ImageFactory::makeImage(rawPic pic, imageType type) {
 }
 
 ImageFactory::~ImageFactory() {

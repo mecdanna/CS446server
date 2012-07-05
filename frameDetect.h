@@ -9,19 +9,18 @@
 #define FRAMEDETECT_H_
 
 #include "abstractImage.h"
-#include "binarizedImage.h"
 #include "comicFrames.h"
 
+typedef AbstractImage<int> LabelData;
+
 class FrameDetect {
-	AbstractImage& rimg;
-	BinarizedImage* bimg;
+	AbstractImage<pixel>& rimg;
+	AbstractImage<byte> bimg;
 	int page;
-	int ccolour; //contour colour
-	int bcolour; //background colour
+	byte ccolour; //contour colour
+	byte bcolour; //background colour
 	int label;
 	int w, h;
-	
-	void cleanUp();
 protected:
 
     struct Point {
@@ -67,14 +66,14 @@ protected:
 	}
 
 	void addWhiteBorders();
-    int determineBackground(BinarizedImage& img);
-    void contourTracking(AbstractImage& labelData, int x, int y, int initialPos, int lbl);
-    Point tracer(AbstractImage& labelData, int x, int y, int pos, int lbl);
-    ComicFrames frames(AbstractImage& labelData) const;
+    int determineBackground(AbstractImage<byte>& img);
+    void contourTracking(LabelData& labelData, int x, int y, int initialPos, int lbl);
+    Point tracer(LabelData& labelData, int x, int y, int pos, int lbl);
+    ComicFrames frames(LabelData& labelData) const;
     ComicFrames process(int px, int py, int pw, int ph);
 public:
 
-    FrameDetect(AbstractImage& page, int pageNum);
+    FrameDetect(AbstractImage<pixel>& page, int pageNum);
     ~FrameDetect();
     ComicFrames process();
 };

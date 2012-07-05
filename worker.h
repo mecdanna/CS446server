@@ -9,13 +9,15 @@
 #define WORKER_H_
 
 #include "frameDetect.h"
-#include "binarizedImage.h"
 #include "comicFrames.h"
 #include "sender.h"
 #include "queue.h"
+#include <vector>
 
 class Worker {
 	Queue& m_queue;
+	
+	std::vector<AbstractImage<pixel> > pages;
 
 public:
 	void process();
