@@ -12,9 +12,12 @@ typedef unsigned int pixel;
 typedef unsigned char byte;
 
 inline byte grayscale(pixel p) {
-	byte b = 0;
+	byte red = (p & 65280) > 8;
+	byte green = (p & 16711680) > 16;
+	byte blue = (p & 4278190080) > 24;
 	
-	return b;
+	
+	return red * 30 + green * 59 + 11 * blue;
 }
 
 /* 
