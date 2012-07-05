@@ -4,7 +4,7 @@
 using namespace std;
 
 FrameDetect::FrameDetect(AbstractImage<pixel>& page, int pageNum) : rimg(page) {
-	//TODO: make bimg
+	bimg = rimg.binarize(228);
 	bcolour = determineBackground(bimg);
 	ccolour = 255 - bcolour;
 	FrameDetect::page = pageNum;

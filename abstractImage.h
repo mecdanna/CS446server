@@ -32,10 +32,6 @@ protected:
 	unsigned int m_width;
 	unsigned int m_height;
 	bool kill;
-
-	T& operator[](int x) {
-		return data[x];
-	}
 public:
 	AbstractImage(int w, int h, bool killMe = true) : m_width(w), m_height(h), kill(killMe) {
 		data = new T[w*h];
@@ -69,6 +65,10 @@ public:
 		return data[x+y*m_width];
 	}
 	
+	T& operator[](int x) {
+		return data[x];
+	}
+	
 	T& at(int x, int y) {
 		return data[x+y*m_width];
 	}
@@ -97,7 +97,7 @@ public:
 		int i = 0;
 		for (int y = 0; y < m_height; ++y) {
 		   for (int x = 0; x < m_width; ++x) {
-			   pixel pix = data(x, y);
+			   pixel pix = at(x, y);
 			   
 			   byte g = grayscale(pix);
 			   
