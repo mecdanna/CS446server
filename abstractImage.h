@@ -8,36 +8,73 @@
 #ifndef ABSTRACTIMAGE_H_
 #define ABSTRACTIMAGE_H_
 
-typedef unsigned int byte;
+typedef unsigned int pixel;
+typedef unsigned char byte;
 
+inline byte grayscale(pixel p) {
+	byte b = 0;
+	
+	return b;
+}
+
+/* 
+ * Very important: STORE IN BGR NOT RGB FORMAT.
+ * pixel = 8.8.8.8 => blue.green.red.nothing (last byte is ignored)
+ */
+ 
+template <typename T>
 class AbstractImage {
 protected:
-	byte *data;
+	T* data;
 	unsigned int m_width;
 	unsigned int m_height;
+	bool kill;
 
+	T& operator[](int x) {
+		return data[x];
+	}
 public:
-	AbstractImage(int w, int h) : m_width(w), m_height(h) {
-		data = new byte[w*h];
+	AbstractImage(int w, int h, bool killMe = true) : m_width(w), m_height(h), kill(killMe) {
+		data = new T[w*h];
+	}
+	
+	AbstractImage(bool killMe = false) : kill(killMe) {
+		
 	}
 
 	~AbstractImage() {
-		delete [] data;
+		if(kill) delete [] data;
 	}
+	
+	AbstractImage(const AbstractImage& AI) {
+		data = AI.data;
+		m_width = AI.m_width;
+		m_height = AI.m_height;
+		kill = true; //we only allow 1 level of copy, from factory
+	}
+ 
+    AbstractImage& operator=(const AbstractImage& AI) {
+		data = AI.data;
+		m_width = AI.m_width;
+		m_height = AI.m_height;
+		kill = true; //we only allow 1 level of copy, from factory
+		return *this;
+	}
+ 
 
-	byte& operator()(int x, int y) {
+	T& operator()(int x, int y) {
 		return data[x+y*m_width];
 	}
 	
-	byte& at(int x, int y) {
+	T& at(int x, int y) {
 		return data[x+y*m_width];
 	}
 
-	const byte* scanline(int y) {
+	const T* scanline(int y) {
 		return data + y*m_width;
 	}
 
-	void fill(const byte &val) {
+	void fill(const T &val) {
 		for (int i=0; i< m_width * m_height; ++i) {
 			data[i] = val;
 		}
@@ -50,6 +87,28 @@ public:
 	int height() const {
 		return m_height;
 	}
+	
+	AbstractImage<byte> binarize(byte thmin) {
+		AbstractImage<byte> bimg(m_width, m_height, false);
+		
+		int i = 0;
+		for (int y = 0; y < m_height; ++y) {
+		   for (int x = 0; x < m_width; ++x) {
+			   pixel pix = data(x, y);
+			   
+			   byte g = grayscale(pix);
+			   
+			   if (g >= thmin) {
+				   bimg[i++] = 255;
+			   } else {
+				   bimg[i++] = 0;
+			   }
+		   }
+		}
+		
+		return bimg;
+	}
+	
 };
 
 
