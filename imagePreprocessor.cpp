@@ -2,7 +2,7 @@
 
 using namespace std;
 
-ImagePreprocessor::ImagePreprocessor(rawData data, ImagePreprocessor::decompressType type, std::vector<AbstractImage<pixel> >& images) :
+ImagePreprocessor::ImagePreprocessor(rawData data, ImagePreprocessor::decompressType type, vector<AbstractImage<pixel> >& images) :
 	images(images) {
 }
 
