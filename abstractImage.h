@@ -16,7 +16,7 @@ inline byte grayscale(pixel p) {
 	byte green = (p & 0x00FF0000) >> 16;
 	byte blue =  (p & 0xFF000000) >> 24;
 	
-	return red * 30 + green * 59 + 11 * blue;
+	return red * .30 + green * .59 + .11 * blue;
 }
 
 /* 
