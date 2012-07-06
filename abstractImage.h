@@ -29,34 +29,35 @@ template <typename T>
 class AbstractImage {
 protected:
 	T* data;
+	short* inUse;
 	unsigned int m_width;
 	unsigned int m_height;
-	bool kill;
 public:
-	AbstractImage(int w, int h, bool killMe = true) : m_width(w), m_height(h), kill(killMe) {
+	AbstractImage(int w, int h) : m_width(w), m_height(h) {
 		data = new T[w*h];
+		inUse = new short(0);
 	}
 	
-	AbstractImage(bool killMe = false) : kill(killMe) {
+	AbstractImage() {
 		
 	}
 
 	~AbstractImage() {
-		if(kill) delete [] data;
+		if(--*inUse = 0 && data != 0) delete [] data;
 	}
 	
 	AbstractImage(const AbstractImage& AI) {
 		data = AI.data;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		kill = true; //we only allow 1 level of copy, from factory
+		++*inUse;
 	}
  
     AbstractImage& operator=(const AbstractImage& AI) {
 		data = AI.data;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		kill = true; //we only allow 1 level of copy, from factory
+		++*inUse;
 		return *this;
 	}
  
@@ -92,7 +93,7 @@ public:
 	}
 	
 	AbstractImage<byte> binarize(byte thmin) {
-		AbstractImage<byte> bimg(m_width, m_height, false);
+		AbstractImage<byte> bimg(m_width, m_height);
 		
 		int i = 0;
 		for (int y = 0; y < m_height; ++y) {
