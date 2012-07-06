@@ -25,8 +25,8 @@ class FrameDetect {
 protected:
 
     struct Point {
-		int x, y;
-		Point(int x, int y): x(x), y(y) {}
+		uint x, y;
+		Point(uint x, uint y): x(x), y(y) {}
 		bool operator==(const Point& p) const { return x == p.x && y == p.y; }
     };
 
@@ -48,7 +48,7 @@ protected:
 		}
 	}
 
-    inline bool nextPoint(uint& offset, int pos) {
+    inline bool nextPoint(uint& offset, uint pos) {
 		switch (pos)
 		{
 			case 0: ++offset; break;

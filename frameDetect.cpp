@@ -3,6 +3,11 @@
 
 using namespace std;
 
+/*
+ * This uses -1 as a flag for an invalid answer, which is 2^32. Since there aren't any comics that have that many pixels,
+ * let alone labels, this won't be a problem.
+ */
+
 FrameDetect::FrameDetect(AbstractImage<pixel>& page, uint pageNum) : rimg(page) {
 	bimg = rimg.binarize(228);
 	bcolour = determineBackground(bimg);
@@ -21,8 +26,8 @@ FrameDetect::~FrameDetect() {}
 ComicFrames FrameDetect::process() {
 	return process(1, 1, w, h-1);
 }
+void FrameDetect::contourTracking(LabelData& labelData, uint x, uinty, uint initialPos, uint lbl) {
 
-void FrameDetect::contourTracking(LabelData& labelData, uint x, uint y, uint initialPos, uint lbl) {
 	uint c = initialPos;
 	Point s(x, y);
 	
