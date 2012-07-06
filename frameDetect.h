@@ -11,7 +11,8 @@
 #include "abstractImage.h"
 #include "comicFrames.h"
 
-typedef AbstractImage<int> LabelData;
+typedef unsigned int uint;
+typedef AbstractImage<uint> LabelData;
 
 class FrameDetect {
 	AbstractImage<pixel>& rimg;
@@ -19,8 +20,8 @@ class FrameDetect {
 	int page;
 	byte ccolour; //contour colour
 	byte bcolour; //background colour
-	int label;
-	int w, h;
+	uint label;
+	uint w, h;
 protected:
 
     struct Point {
@@ -29,7 +30,7 @@ protected:
 		bool operator==(const Point& p) const { return x == p.x && y == p.y; }
     };
 
-    inline static bool nextPoint(int& x, int& y, int pos) {
+    inline static bool nextPoint(uint& x, uint& y, uint pos) {
 		switch (pos)
 		{
 			case 0: ++x; break;
@@ -47,7 +48,7 @@ protected:
 		}
 	}
 
-    inline bool nextPoint(int& offset, int pos) {
+    inline bool nextPoint(uint& offset, int pos) {
 		switch (pos)
 		{
 			case 0: ++offset; break;
@@ -66,14 +67,14 @@ protected:
 	}
 
 	void addWhiteBorders();
-    int determineBackground(AbstractImage<byte>& img);
-    void contourTracking(LabelData& labelData, int x, int y, int initialPos, int lbl);
-    Point tracer(LabelData& labelData, int x, int y, int pos, int lbl);
+    byte determineBackground(AbstractImage<byte>& img);
+    void contourTracking(LabelData& labelData,uint x, uint y, uint initialPos, uint lbl);
+    Point tracer(LabelData& labelData, uint x, uint y, uint pos, uint lbl);
     ComicFrames frames(LabelData& labelData) const;
-    ComicFrames process(int px, int py, int pw, int ph);
+    ComicFrames process(uint px, uint py, uint pw, uint ph);
 public:
 
-    FrameDetect(AbstractImage<pixel>& page, int pageNum);
+    FrameDetect(AbstractImage<pixel>& page, uint pageNum);
     ~FrameDetect();
     ComicFrames process();
 };

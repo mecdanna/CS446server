@@ -3,7 +3,7 @@
 
 using namespace std;
 
-FrameDetect::FrameDetect(AbstractImage<pixel>& page, int pageNum) : rimg(page) {
+FrameDetect::FrameDetect(AbstractImage<pixel>& page, uint pageNum) : rimg(page) {
 	bimg = rimg.binarize(228);
 	bcolour = determineBackground(bimg);
 	ccolour = 255 - bcolour;
@@ -22,8 +22,8 @@ ComicFrames FrameDetect::process() {
 	return process(1, 1, w, h-1);
 }
 
-void FrameDetect::contourTracking(LabelData& labelData, int x, int y, int initialPos, int lbl) {
-	int c = initialPos;
+void FrameDetect::contourTracking(LabelData& labelData, uint x, uint y, uint initialPos, uint lbl) {
+	uint c = initialPos;
 	Point s(x, y);
 	
 	bool atStart = false; //gotten back to initial position
@@ -64,20 +64,20 @@ void FrameDetect::contourTracking(LabelData& labelData, int x, int y, int initia
 	}
 }
 
-FrameDetect::Point FrameDetect::tracer(LabelData& labelData, int x, int y, int pos, int lbl) {
-	for (int i = 7; i >= 0; --i) {
-		int tx = x;
-		int ty = y;
+FrameDetect::Point FrameDetect::tracer(LabelData& labelData, uint x, uint y, uint pos, uint lbl) {
+	for (uint i = 7; i >= 0; --i) {
+		uint tx = x;
+		uint ty = y;
 		nextPoint(tx, ty, pos);
 		
 		if (tx > 0 && ty > 0 && tx < w && ty < h) {
-			const int &l = labelData(tx,ty);
+			const uint &l = labelData(tx,ty);
 			
-			if (bimg.at(tx,ty) == ccolour && (l == 0 || l == lbl))
+			if (bimg(tx,ty) == ccolour && (l == 0 || l == lbl))
 			{
 				return Point(tx,ty);
 			}
-			if (bimg.at(tx,ty) == bcolour)
+			if (bimg(tx,ty) == bcolour)
 			{
 				labelData(tx,ty) = -1;
 			}
@@ -89,23 +89,23 @@ FrameDetect::Point FrameDetect::tracer(LabelData& labelData, int x, int y, int p
 }
 
 ComicFrames FrameDetect::frames(LabelData& labelData) const {
-	vector<int> x1(label);
-	vector<int> x2(label);
-	vector<int> y1(label);
-	vector<int> y2(label);
+	vector<uint> x1(label);
+	vector<uint> x2(label);
+	vector<uint> y1(label);
+	vector<uint> y2(label);
 	
 	//initialize tables
-	for (int lbl=0; lbl<label; lbl++) {
+	for (uint lbl=0; lbl<label; lbl++) {
 		x1[lbl] = w;
 		x2[lbl] = y2[lbl] = -1;
 		y1[lbl] = h;
 	}
 	
 	//find bounding boxes for labels
-	for (int y = 0; y < h; ++y) {
-		for (int x = 0; x < w; ++x) {
+	for (uint y = 0; y < h; ++y) {
+		for (uint x = 0; x < w; ++x) {
 			
-			int lbl = labelData(x, y);
+			uint lbl = labelData(x, y);
 			
 			if (lbl > 0) {
 				if (x < x1[lbl]) { x1[lbl] = x; }
@@ -118,9 +118,9 @@ ComicFrames FrameDetect::frames(LabelData& labelData) const {
 	
 	ComicFrames comicFrames(page, w, h);
 	
-	for (int lbl = 0; lbl < label; ++lbl) {
-		int FW = x2[lbl]-x1[lbl];
-		int FH = y2[lbl]-y1[lbl];
+	for (uint lbl = 0; lbl < label; ++lbl) {
+		uint FW = x2[lbl]-x1[lbl];
+		uint FH = y2[lbl]-y1[lbl];
 		
 		if ((FW >= w/6) && (FH >= h/8)) {
 			comicFrames.append(comicFrame(x1[lbl], y1[lbl], w, h, lbl));
@@ -134,25 +134,25 @@ ComicFrames FrameDetect::frames(LabelData& labelData) const {
 	return comicFrames;
 }
 
-ComicFrames FrameDetect::process(int px, int py, int pw, int ph) {
+ComicFrames FrameDetect::process(uint px, uint py, uint pw, uint ph) {
 	LabelData labelData(w, h); //allocates more than required
 	labelData.fill(0);
 	
 	label = 1;
-	for(int y = py; y < py + ph; ++y) {
-		for (int x = px; x < px + pw; ++x) {
-			int p = labelData(x,y);
+	for(uint y = py; y < py + ph; ++y) {
+		for (uint x = px; x < px + pw; ++x) {
+			uint p = labelData(x,y);
 			
-			if (bimg.at(x,y) == ccolour) { //find contour pixel
+			if (bimg(x,y) == ccolour) { //find contour pixel
 			//step 1
-				if (p == 0 && bimg.at(x,y-1) == bcolour) {
+				if (p == 0 && bimg(x,y-1) == bcolour) {
 					p = label;
 					contourTracking(labelData, x, y, 7, label++);
 					
-				} else if (labelData.at(x,y+1) == 0 && bimg.at(x,y+1) == bcolour) { //pixel is below unmarked pixel
+				} else if (labelData(x,y+1) == 0 && bimg(x,y+1) == bcolour) { //pixel is below unmarked pixel
 			//step 2
 					if (p == 0) {
-						p = labelData.at(x-1, y); //copy label
+						p = labelData(x-1, y); //copy label
 					}
 					contourTracking(labelData, x, y, 3, p);
 					
@@ -167,23 +167,23 @@ ComicFrames FrameDetect::process(int px, int py, int pw, int ph) {
 }
 
 void FrameDetect::addWhiteBorders() {
-	for(int x = 0; x < w-1; ++x) {
-		bimg.at(x,0) = bimg.at(x,h-1) = bcolour;
+	for(uint x = 0; x < w-1; ++x) {
+		bimg(x,0) = bimg(x,h-1) = bcolour;
 	}
 	
-	for(int y = 0; y < h-1; ++y) {
-		bimg.at(0,y) = bimg.at(w-1,y) = bcolour;
+	for(uint y = 0; y < h-1; ++y) {
+		bimg(0,y) = bimg(w-1,y) = bcolour;
 	}
 }
 
-int FrameDetect::determineBackground(AbstractImage<byte>& img) {
-	int stripWidth = w/100;
+byte FrameDetect::determineBackground(AbstractImage<byte>& img) {
+	uint stripWidth = w/100;
 	
-	int black = 0;
-	int white = 0;
+	uint black = 0;
+	uint white = 0;
 	
-	for(int y = 0; y < h; ++y) {
-		for(int x = 0; x < stripWidth; ++x) {
+	for(uint y = 0; y < h; ++y) {
+		for(uint x = 0; x < stripWidth; ++x) {
 			if(img(x,y) == 0) {
 				++black;
 			} else {
