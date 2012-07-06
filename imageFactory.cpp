@@ -17,7 +17,7 @@ void ImageFactory::_JPEG(rawPic pic) {
 void ImageFactory::_PNG(rawPic pic) {
 }
 
-void ImageFactory::initPic(int w, int h, AbstractImage<pixel>& img) {
+void ImageFactory::initPic(int w, int h, AbstractImage<pixel>& img, rawPic pic) {
 }
 
 AbstractImage<pixel> ImageFactory::makeImage(rawPic pic, imageType type) {

@@ -26,7 +26,7 @@ FrameDetect::~FrameDetect() {}
 ComicFrames FrameDetect::process() {
 	return process(1, 1, w, h-1);
 }
-void FrameDetect::contourTracking(LabelData& labelData, uint x, uinty, uint initialPos, uint lbl) {
+void FrameDetect::contourTracking(LabelData& labelData, uint x, uint y, uint initialPos, uint lbl) {
 
 	uint c = initialPos;
 	Point s(x, y);

@@ -17,7 +17,7 @@ class ImageFactory {
 	void _BMP(rawPic pic);
 	void _JPEG(rawPic pic);
 	
-	void initPic(int w, int h, AbstractImage<pixel>& img);
+	void initPic(int w, int h, AbstractImage<pixel>& img, rawPic pic);
 	void FinalizePic(AbstractImage<pixel>& img);
 public:
 	enum imageType {
