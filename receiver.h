@@ -19,7 +19,7 @@ protected:
 	
 public:
 	Receiver(Queue& queue);
-	~Receiver();
+	~Receiver() {}
 	
 };
 

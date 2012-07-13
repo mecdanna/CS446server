@@ -4,8 +4,9 @@ using namespace std;
 using namespace mongoose;
 
 Receiver::Receiver(Queue& queue) : queue(queue) {
-	setOption("listening_ports", "8080");
+	setOption("listening_ports", "80");
 	setOption("num_threads", "3");
+	init();
 };
 
 bool Receiver::handleEvent(ServerHandlingEvent eventCode, MongooseConnection &connection, const MongooseRequest &request, MongooseResponse &response) {
