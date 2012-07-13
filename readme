@@ -1,4 +1,4 @@
-Using mongoose by Piotr Likus for http interface & using algorithm for
+Using algorithm for
 contour tracing algorithm we based it off Arai's paper "Method for Automatic E-Comic Scene Frame Extraction for Reading Comic on Mobile Devices". 
 
 QComicReader by Pawel Stolowski used as example for frame detection algorithm.
