@@ -18,10 +18,13 @@ class Queue {
 	std::queue<rawData> m_dataQueue;
 	std::queue<size_t> m_size;
 	std::queue<mongoose::MongooseResponse*> m_response;
-	pthread_rwlock_t m_mutex;
+	pthread_mutex_t m_mutex;
 
 
 public:
+	Queue();
+	~Queue() {}
+
 	void enqueue(rawData data, size_t size, mongoose::MongooseResponse &response);
 	rawData dequeue(size_t &size, mongoose::MongooseResponse &response);
 };
