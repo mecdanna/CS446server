@@ -8,18 +8,21 @@
 #ifndef RECEIVER_H_
 #define RECEIVER_H_
 
-#include "HappyHttp/happyhttp.h"
 #include "queue.h"
-#include "request.h"
+#include "mongoose/mongcpp.h"
 
-class Receiver {
+class Receiver : public mongoose::MongooseServer {
 	Queue& queue;
-
-	bool checkForHttpRequest();
-
+	
+	void addToQueue();
+	
+protected:
+  virtual bool handleEvent(mongoose::ServerHandlingEvent eventCode, mongoose::MongooseConnection &connection, const mongoose::MongooseRequest &request, mongoose::MongooseResponse &response);
+	
 public:
-	Receiver(Queue& queue) : queue(queue) {}
-	void startListening();
+	Receiver(Queue& queue);
+	~Receiver();
+	
 };
 
 

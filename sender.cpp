@@ -5,7 +5,7 @@ using namespace std;
 Sender::Sender() {
 }
 
-void Sender::sendToClient(Request request, std::vector<ComicFrames> frames) {
+void Sender::sendToClient(std::vector<ComicFrames> frames) {
 }
 
 Sender::~Sender() {

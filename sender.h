@@ -8,8 +8,6 @@
 #ifndef SENDER_H_
 #define SENDER_H_
 
-#include "HappyHttp/happyhttp.h"
-#include "request.h"
 #include "comicFrames.h"
 #include <vector>
 
@@ -18,7 +16,7 @@ public:
 	Sender();
 	~Sender();
 
-	void sendToClient(Request request, std::vector<ComicFrames> frames);
+	void sendToClient(std::vector<ComicFrames> frames);
 };
 
 
