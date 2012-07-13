@@ -9,16 +9,21 @@ Receiver::Receiver(Queue& queue) : queue(queue) {
 };
 
 bool Receiver::handleEvent(ServerHandlingEvent eventCode, MongooseConnection &connection, const MongooseRequest &request, MongooseResponse &response) {
-	string fileSz;
-	if(!request.getVar("fileSz", fileSz)) {
-		//log some kind of error
-		return false;
-	}
 	
-	size_t size = atoi(fileSz.c_str());
-	void* data;
-	if(!request.getData("file", data, size)) {
-		return false;
+	if(eventCode == MG_NEW_REQUEST) {
+		string fileSz;
+		if(!request.getVar("fileSz", fileSz)) {
+			//log some kind of error
+			return false;
+		}
+		
+		size_t size = atoi(fileSz.c_str());
+		void* data;
+		if(!request.getData("file", data, size)) {
+			return false;
+		}
+		
+		response.setConnectionAlive(true);
+		response.setContentType("text");
 	}
 }
-	

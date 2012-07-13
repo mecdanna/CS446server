@@ -3,9 +3,7 @@
 using namespace std;
 using namespace mongoose;
 
-Queue::Queue() {
-	m_mutex = PTHREAD_MUTEX_INITIALIZER;
-}
+Queue::Queue() : m_mutex(PTHREAD_MUTEX_INITIALIZER) {}
 
 rawData Queue::dequeue(size_t &size, MongooseResponse& response) {
 	pthread_mutex_lock(&m_mutex);

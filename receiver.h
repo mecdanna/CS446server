@@ -14,8 +14,6 @@
 class Receiver : public mongoose::MongooseServer {
 	Queue& queue;
 	
-	void addToQueue();
-	
 protected:
   virtual bool handleEvent(mongoose::ServerHandlingEvent eventCode, mongoose::MongooseConnection &connection, const mongoose::MongooseRequest &request, mongoose::MongooseResponse &response);
 	
