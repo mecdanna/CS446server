@@ -227,6 +227,16 @@ bool MongooseRequest::getVar(const std::string &name, std::string &output) const
     }
 }
 
+bool MongooseRequest::getData(const std::string &name, void* data, size_t buf_len) const
+{
+    const char *qs = m_info->query_string;
+	int cnt = 0;
+    cnt = mg_get_var(qs, strlen(qs == NULL ? "" : qs), name.c_str(), (char*)data, buf_len);
+	
+	return cnt ? false : true;
+    
+}
+
 //-----------------------------------------------------------------------
 MongooseResponse::MongooseResponse(struct mg_connection *conn): m_conn(conn), m_addContentLen(false)
 {

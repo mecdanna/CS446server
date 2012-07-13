@@ -104,6 +104,7 @@ public:
     int getStatusCode() const;
     bool isSsl() const;
     bool getVar(const std::string &name, std::string &output) const;
+	bool getData(const std::string &name, void* data, size_t buf_len) const;
     static MongooseRequestMethodCode methodTextToCode(const std::string &text);
 protected:
     mg_request_info* getInfo() const;
