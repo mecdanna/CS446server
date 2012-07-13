@@ -434,10 +434,10 @@ void MongooseResponse::addHeaderValue(const std::string &name, const std::string
     if (cit != m_headerValuesIndex->end()) {
         cit->second = idx;
     } else {
-        m_headerValuesIndex->insert(std::make_pair<std::string, int>(name, idx));
+        m_headerValuesIndex->insert(std::make_pair(name, idx));
     }
 
-    m_headerValues->push_back(std::make_pair<std::string, std::string>(name, value));
+    m_headerValues->push_back(std::make_pair(name, value));
 }
 
 void MongooseResponse::setHeaderValue(const std::string &name, const std::string &value)
@@ -449,8 +449,8 @@ void MongooseResponse::setHeaderValue(const std::string &name, const std::string
         (*m_headerValues)[idx].second = value;
     } else {
         int idx = m_headerValues->size();
-        m_headerValuesIndex->insert(std::make_pair<std::string, int>(name, idx));
-        m_headerValues->push_back(std::make_pair<std::string, std::string>(name, value));
+        m_headerValuesIndex->insert(std::make_pair(name, idx));
+        m_headerValues->push_back(std::make_pair(name, value));
     }
 }
 
