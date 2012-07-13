@@ -18,12 +18,14 @@ bool Receiver::handleEvent(ServerHandlingEvent eventCode, MongooseConnection &co
 		}
 		
 		size_t size = atoi(fileSz.c_str());
-		void* data;
+		rawData data;
 		if(!request.getData("file", data, size)) {
 			return false;
 		}
 		
 		response.setConnectionAlive(true);
 		response.setContentType("text");
+		
+		queue.enqueue(data, size, response);
 	}
 }
