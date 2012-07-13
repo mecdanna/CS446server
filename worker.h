@@ -16,13 +16,14 @@
 
 class Worker {
 	Queue& m_queue;
-	
+	static bool done;
 	std::vector<AbstractImage<pixel> > pages;
 
 public:
-	void process();
+	void* process();
+	static void turnOff() { done = true; }
 	Worker(Queue& queue) : m_queue(queue){}
-	~Worker();
+	~Worker() {}
 };
 
 
