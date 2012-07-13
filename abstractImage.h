@@ -37,9 +37,7 @@ public:
 		inUse = new short(0);
 	}
 	
-	AbstractImage() {
-		
-	}
+	AbstractImage() {}
 
 	~AbstractImage() {
 		if(--*inUse = 0 && data != 0) delete [] data;
@@ -108,7 +106,6 @@ public:
 			   }
 		   }
 		}
-		
 		return bimg;
 	}
 	

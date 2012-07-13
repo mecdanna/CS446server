@@ -10,13 +10,11 @@
 
 #include <queue>
 #include <pthread.h>
-#include "request.h"
 
 typedef void* rawData;
 
 class Queue {
 	std::queue<rawData> m_dataQueue;
-	std::queue<Request> m_RequestQueue;
 	pthread_rwlock_t m_mutex;
 
 

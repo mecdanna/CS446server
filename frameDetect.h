@@ -11,7 +11,6 @@
 #include "abstractImage.h"
 #include "comicFrames.h"
 
-typedef unsigned int uint;
 typedef AbstractImage<uint> LabelData;
 
 class FrameDetect {
