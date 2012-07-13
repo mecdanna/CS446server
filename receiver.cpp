@@ -20,11 +20,9 @@ bool Receiver::handleEvent(ServerHandlingEvent eventCode, MongooseConnection &co
 		size_t size = atoi(fileSz.c_str());
 		rawData data;
 		if(!request.getData("file", data, size)) {
+			//log some kind of error
 			return false;
 		}
-		
-		response.setConnectionAlive(true);
-		response.setContentType("text");
 		
 		queue.enqueue(data, size, response);
 	}

@@ -9,14 +9,15 @@
 #define SENDER_H_
 
 #include "comicFrames.h"
+#include "mongoose/mongcpp.h"
 #include <vector>
 
 class Sender {
 public:
-	Sender();
-	~Sender();
+	Sender() {}
+	~Sender() {}
 
-	void sendToClient(std::vector<ComicFrames> frames);
+	void sendToClient(std::vector<ComicFrames>& frames, mongoose::MongooseResponse& response);
 };
 
 
