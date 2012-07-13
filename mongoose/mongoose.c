@@ -4059,7 +4059,6 @@ static void free_context(struct mg_context *ctx) {
 
 void mg_stop(struct mg_context *ctx) {
   ctx->stop_flag = 1;
-
   // Wait until mg_fini() stops
   while (ctx->stop_flag != 2) {
     (void) sleep(0);
@@ -4115,7 +4114,8 @@ struct mg_context *mg_start(mg_callback_t user_callback, void *user_data,
 
   // NOTE(lsm): order is important here. SSL certificates must
   // be initialized before listening ports. UID must be set last.
-  if (!set_gpass_option(ctx) ||
+  //Unwanted feature of comic cruiser
+  /*if (!set_gpass_option(ctx) ||
 #if !defined(NO_SSL)
       !set_ssl_option(ctx) ||
 #endif
@@ -4126,7 +4126,7 @@ struct mg_context *mg_start(mg_callback_t user_callback, void *user_data,
       !set_acl_option(ctx)) {
     free_context(ctx);
     return NULL;
-  }
+  }*/
 
 #if !defined(_WIN32)
   // Ignore SIGPIPE signal, so if browser cancels the request, it

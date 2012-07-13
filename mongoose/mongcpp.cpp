@@ -13,6 +13,7 @@
 
 #include <sstream>
 #include <cstring>
+#include <iostream>
 
 using namespace mongoose;
 
