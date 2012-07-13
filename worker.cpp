@@ -9,5 +9,7 @@ void* Worker::process() {
 	while(!done) {
 		
 	}
+	
+	 pthread_exit(NULL);
 }
 

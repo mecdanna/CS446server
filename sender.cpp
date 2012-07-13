@@ -2,12 +2,8 @@
 #include <sstream>
 
 using namespace std;
-using namespace mongoose;
 
-void Sender::sendToClient(std::vector<ComicFrames>& frames, MongooseResponse& response) {
-	response.setConnectionAlive(false);
-	response.setContentType("text");
-	response.setStatus(200);
+void Sender::sendToClient(std::vector<ComicFrames>& frames, response& res) {
 	
 	stringstream encode;
 
@@ -27,6 +23,4 @@ void Sender::sendToClient(std::vector<ComicFrames>& frames, MongooseResponse& re
 		encode << "</page>";
 	}
 	
-	response.addContent(encode.str());
-	response.write();
 }

@@ -28,13 +28,11 @@ int main(int argc, char **argv) {
 	}
 	
 	Receiver receiver(comicQueue);
-	receiver.start();
 	
-	cout << "Press any key to stop" << endl;
+	cout << "Press Enter to stop" << endl;
 	cin.ignore();
 	cout << "STOP! Hammer time." << endl;
 	
-	receiver.stop();
 	Worker::turnOff();
 	
 	for (int i = 0; i < NUMTHREADS; ++i) {

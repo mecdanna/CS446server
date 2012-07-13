@@ -9,15 +9,16 @@
 #define RECEIVER_H_
 
 #include "queue.h"
-#include "mongoose/mongcpp.h"
 
-class Receiver : public mongoose::MongooseServer {
+class Receiver {
 	Queue& queue;
 	
 protected:
-  virtual bool handleEvent(mongoose::ServerHandlingEvent eventCode, mongoose::MongooseConnection &connection, const mongoose::MongooseRequest &request, mongoose::MongooseResponse &response);
+  virtual bool handleEvent();
 	
 public:
+	void start();
+	void stop();
 	Receiver(Queue& queue);
 	~Receiver() {}
 	

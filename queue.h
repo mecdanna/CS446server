@@ -10,14 +10,14 @@
 
 #include <queue>
 #include <pthread.h>
-#include "mongoose/mongcpp.h"
 
 typedef void* rawData;
+typedef int response;
 
 class Queue {
 	std::queue<rawData> m_dataQueue;
 	std::queue<size_t> m_size;
-	std::queue<mongoose::MongooseResponse*> m_response;
+	std::queue<response> m_response;
 	pthread_mutex_t m_mutex;
 
 
@@ -25,8 +25,8 @@ public:
 	Queue();
 	~Queue() {}
 
-	void enqueue(rawData data, size_t size, mongoose::MongooseResponse &response);
-	rawData dequeue(size_t &size, mongoose::MongooseResponse &response);
+	void enqueue(rawData data, size_t size, response& res);
+	rawData dequeue(size_t& size, response& res);
 };
 
 
