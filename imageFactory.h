@@ -10,15 +10,14 @@
 
 #include "abstractImage.h"
 
-typedef void* rawPic;
+typedef char* rawPic; // file path to pic
 
 class ImageFactory {
-	void _PNG(rawPic pic);
-	void _BMP(rawPic pic);
-	void _JPEG(rawPic pic);
-	
 	void initPic(int w, int h, AbstractImage<pixel>& img, rawPic pic);
 	void FinalizePic(AbstractImage<pixel>& img);
+	AbstractImage<pixel> _PNG(rawPic pic);
+	AbstractImage<pixel> _BMP(rawPic pic);
+	AbstractImage<pixel> _JPEG(rawPic pic);
 public:
 	enum imageType {
 		imageType_PNG = 0,
@@ -33,4 +32,3 @@ public:
 
 
 #endif /* IMAGEFACTORY_H_ */
- 
