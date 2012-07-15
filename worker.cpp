@@ -2,9 +2,14 @@
 
 using namespace std;
 
-void Worker::process() {
-}
+bool Worker::done = false;
 
-Worker::~Worker() {
+void* Worker::process() {
+	
+	while(!done) {
+		
+	}
+	
+	 pthread_exit(NULL);
 }
 
