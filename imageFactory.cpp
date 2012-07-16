@@ -12,7 +12,7 @@ ImageFactory::ImageFactory() { }
 
 void ImageFactory::initPic(int w, int h, AbstractImage<pixel>& img, rawPic pic) { }
 
-AbstractImage<pixel> _PNG(rawPic pic) {
+AbstractImage<pixel> ImageFactory::_PNG(rawPic pic) {
 	unsigned int w, h;
 	unsigned char * image;
 	lodepng_decode24_file(&image, &w, &h, pic);
@@ -28,7 +28,7 @@ AbstractImage<pixel> _PNG(rawPic pic) {
 	return result;
 }
 
-AbstractImage<pixel> _BMP(rawPic pic) {
+AbstractImage<pixel> ImageFactory::_BMP(rawPic pic) {
 	AbstractImageHeader header = BmpHeader();
 	istream * in = new ifstream(pic, ios::in | ios::binary);
 	header.readHeader(*in);
@@ -48,7 +48,7 @@ AbstractImage<pixel> _BMP(rawPic pic) {
 	}
 }
 
-AbstractImage<pixel> _JPEG(rawPic pic) {
+AbstractImage<pixel> ImageFactory::_JPEG(rawPic pic) {
 
 }
 
