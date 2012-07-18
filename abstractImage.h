@@ -34,7 +34,7 @@ protected:
 public:
 	AbstractImage(int w, int h) : m_width(w), m_height(h) {
 		data = new T[w*h];
-		inUse = new short(0);
+		inUse = new short(1);
 	}
 	
 	AbstractImage() {}
