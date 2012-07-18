@@ -39,7 +39,7 @@ public:
 	
 	AbstractImage() {}
 
-	~AbstractImage() {
+	virtual ~AbstractImage() {
 		if(--*inUse = 0 && data != 0) delete [] data;
 	}
 	
