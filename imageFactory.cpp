@@ -20,16 +20,16 @@ AbstractImage<pixel> ImageFactory::_PNG(rawPic pic) {
 	AbstractImage<pixel> result(w,h);
 	for(int i = 0 ; i < w; i += 1 ) {
 		for (int j = 0 ; j < h; j += 1) {
-			result(i,j) = image[i*3 + i*j*3 + 0] << 24 |
-					      image[i*3 + i*j*3 + 1] << 16 |
-					      image[i*3 + i*j*3 + 2] << 8;
+			result(i,j) = image[j*w*3 + i*3 + 0] << 8 |
+					      image[j*w*3 + i*3 + 1] << 16 |
+					      image[j*w*3 + i*3 + 2] << 24;
 		}
 	}
 	return result;
 }
 
 AbstractImage<pixel> ImageFactory::_BMP(rawPic pic) {
-	AbstractImageHeader header = BmpHeader();
+	BmpHeader header = BmpHeader();
 	istream * in = new ifstream(pic, ios::in | ios::binary);
 	header.readHeader(*in);
 
@@ -37,15 +37,25 @@ AbstractImage<pixel> ImageFactory::_BMP(rawPic pic) {
 	unsigned int h = header.getImageHeight();
 
 	AbstractImage<pixel> result(w, h);
-	in->seekg(h.getHeaderSize(), ios::beg);
 
-	unsigned char pix[3];
-	for( int i = 0; i < w; i += 1) {
-		for( int j = 0; j < h; j += 1) {
-			in->read(pix, sizeof(pix));
-			result(i,j) = pix[0] << 24 | pix[1] << 16 | pix[2] << 8;
+    unsigned int rowSize = w*3;         // 3 bytes per pixel * width
+    unsigned int padding = (4 - (rowSize % 4)) % 4;
+    rowSize = rowSize + padding;  // account for padding
+
+    in->seekg(0, ios::end);
+    unsigned int end = in->tellg();
+
+	unsigned char pixel[3];
+
+    for( int j = 0; j < h; j += 1) {
+        in->seekg(end - (j*rowSize + rowSize));
+        for( int i = 0; i < w; i += 1) {
+			in->read((char*)pixel, sizeof(pixel));
+			result(i,j) = pixel[0] << 24 | pixel[1] << 16 | pixel[2] << 8;
 		}
 	}
+
+    return result;
 }
 
 AbstractImage<pixel> ImageFactory::_JPEG(rawPic pic) {
