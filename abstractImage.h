@@ -34,27 +34,36 @@ protected:
 public:
 	AbstractImage(int w, int h) : m_width(w), m_height(h) {
 		data = new T[w*h];
-		inUse = new short(1);
+		inUse = new short;
+        *inUse = 1;
 	}
 	
-	AbstractImage() {}
+	AbstractImage() { inUse = 0; }
 
 	virtual ~AbstractImage() {
-		if(--*inUse = 0 && data != 0) delete [] data;
+        if (inUse == 0) return;
+        (*inUse) -= 1;
+
+		if( *inUse == 0 ) {
+            delete [] data;
+            delete inUse;
+        }
 	}
 	
 	AbstractImage(const AbstractImage& AI) {
 		data = AI.data;
+        inUse = AI.inUse;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		++*inUse;
+		if (inUse != 0) (*inUse) += 1;
 	}
  
     AbstractImage& operator=(const AbstractImage& AI) {
 		data = AI.data;
+        inUse = AI.inUse;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		++*inUse;
+		if (inUse != 0) (*inUse) += 1;
 		return *this;
 	}
  

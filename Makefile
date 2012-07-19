@@ -15,7 +15,7 @@ SERVER_DEPS=
 SERVER_BIN=server
 
 # This is just my secret target for doing quick and dirty tests
-TEST_OBJ_LIST=lodepng.o test.o imageFactory.o imagePreprocessor.o 
+TEST_OBJ_LIST=lodepng.o test.o imageFactory.o imagePreprocessor.o frameDetect.o comicFrames.o
 TEST_OBJ=$(patsubst %, $(OBJDIR)/%, $(TEST_OBJ_LIST))
 TEST_DEPS=zipdep/ioapi.o zipdep/unzip.o zipdep/libz.a
 TEST_BIN=test

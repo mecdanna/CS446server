@@ -290,9 +290,6 @@ int do_extract_currentfile( unzFile uf, const int* popt_extract_without_path,
                         err=UNZ_ERRNO;
                         break;
                     }
-                    // SUUUPER HACK
-                    ImageFactory f = ImageFactory();
-                    images.push_back(f.makeImage(write_filename,ImageFactory::imageType_PNG));
             }
             while (err>0);
             if (fout)
@@ -301,6 +298,10 @@ int do_extract_currentfile( unzFile uf, const int* popt_extract_without_path,
             if (err==0)
                 change_file_date(write_filename,file_info.dosDate,
                                  file_info.tmu_date);
+
+            // SUUUPER HACK
+            ImageFactory f = ImageFactory();
+            images.push_back(f.makeImage(write_filename,ImageFactory::imageType_BMP));
         }
 
         if (err==UNZ_OK)
