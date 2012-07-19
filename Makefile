@@ -11,13 +11,13 @@ CFLAGS=-std=c++0x -g
 
 SERVER_OBJ_LIST=imageFactory.o comicFrames.o frameDetect.o lodepng.o receiver.o sender.o worker.o main.o imagePreprocessor.o queue.o
 SERVER_OBJ=$(patsubst %, $(OBJDIR)/%, $(SERVER_OBJ_LIST))
-SERVER_DEPS=lodepng/lodepng.h abstractImage.h imageHeaders.h
+SERVER_DEPS=
 SERVER_BIN=server
 
 # This is just my secret target for doing quick and dirty tests
-TEST_OBJ_LIST=lodepng.o test.o
+TEST_OBJ_LIST=lodepng.o test.o imageFactory.o imagePreprocessor.o 
 TEST_OBJ=$(patsubst %, $(OBJDIR)/%, $(TEST_OBJ_LIST))
-TEST_DEPS=lodepng/lodepng.h abstractImage.h imageHeaders.h
+TEST_DEPS=zipdep/ioapi.o zipdep/unzip.o zipdep/libz.a
 TEST_BIN=test
 
 #############################

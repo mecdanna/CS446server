@@ -20,9 +20,9 @@ AbstractImage<pixel> ImageFactory::_PNG(rawPic pic) {
 	AbstractImage<pixel> result(w,h);
 	for(int i = 0 ; i < w; i += 1 ) {
 		for (int j = 0 ; j < h; j += 1) {
-			result(i,j) = image[j*w*3 + i*3 + 0] << 8 |
-					      image[j*w*3 + i*3 + 1] << 16 |
-					      image[j*w*3 + i*3 + 2] << 24;
+			result.at(i,j) = image[j*w*3 + i*3 + 0] << 8 |
+					         image[j*w*3 + i*3 + 1] << 16 |
+					         image[j*w*3 + i*3 + 2] << 24;
 		}
 	}
 	return result;
@@ -51,7 +51,7 @@ AbstractImage<pixel> ImageFactory::_BMP(rawPic pic) {
         in->seekg(end - (j*rowSize + rowSize));
         for( int i = 0; i < w; i += 1) {
 			in->read((char*)pixel, sizeof(pixel));
-			result(i,j) = pixel[0] << 24 | pixel[1] << 16 | pixel[2] << 8;
+			result.at(i,j) = pixel[0] << 24 | pixel[1] << 16 | pixel[2] << 8;
 		}
 	}
 

@@ -12,7 +12,7 @@
 #include <vector>
 #include "imageFactory.h"
 
-typedef void* rawData;
+typedef char* rawData;  // filepath to the cbz/cbr archive
 
 class ImagePreprocessor {
 	std::vector<AbstractImage<pixel> >& images;
