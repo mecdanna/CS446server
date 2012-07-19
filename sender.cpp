@@ -29,5 +29,6 @@ void Sender::sendToClient(std::vector<ComicFrames>& frames, int response) {
 	const char* buf = encode.str().c_str();
 	
 	send(response, buf, encode.str().size(), 0);
+	close(response);
 	
 }
