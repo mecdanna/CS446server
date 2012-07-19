@@ -32,7 +32,7 @@ protected:
 	unsigned int m_width;
 	unsigned int m_height;
 public:
-	AbstractImage(int w, int h) : m_width(w), m_height(h) {
+	AbstractImage(unsigned int w, unsigned int h) : m_width(w), m_height(h) {
 		data = new T[w*h];
 		inUse = new short;
         *inUse = 1;
@@ -109,9 +109,9 @@ public:
 			   byte g = grayscale(pix);
 			   
 			   if (g >= thmin) {
-				   bimg[i++] = 255;
+				   bimg.at(x,y) = 255;
 			   } else {
-				   bimg[i++] = 0;
+				   bimg.at(x,y) = 0;
 			   }
 		   }
 		}

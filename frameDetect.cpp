@@ -14,10 +14,10 @@ FrameDetect::FrameDetect(AbstractImage<pixel>& page, uint pageNum) : rimg(page) 
 	ccolour = 255 - bcolour;
 	FrameDetect::page = pageNum;
 	
-	addWhiteBorders();
-	
 	w = page.width();
 	h = page.height();
+
+	addWhiteBorders();
 }
 
 FrameDetect::~FrameDetect() {}
