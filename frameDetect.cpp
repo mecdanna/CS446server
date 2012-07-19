@@ -10,12 +10,13 @@ using namespace std;
 
 FrameDetect::FrameDetect(AbstractImage<pixel>& page, uint pageNum) : rimg(page) {
 	bimg = rimg.binarize(228);
+
+	w = page.width();
+	h = page.height();
+
 	bcolour = determineBackground(bimg);
 	ccolour = 255 - bcolour;
 	FrameDetect::page = pageNum;
-	
-	w = page.width();
-	h = page.height();
 
 	addWhiteBorders();
 }
