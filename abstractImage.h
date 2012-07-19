@@ -34,17 +34,21 @@ protected:
 public:
 	AbstractImage(unsigned int w, unsigned int h) : m_width(w), m_height(h) {
 		data = new T[w*h];
-		inUse = new short;
-        *inUse = 1;
+		inUse = new short(1);
 	}
 	
-	AbstractImage() { inUse = 0; }
+	AbstractImage() { inUse = nullptr; }
 
 	virtual ~AbstractImage() {
-        if (inUse == 0) return;
-        (*inUse) -= 1;
+        if (!inUse) {
+			if(data) {
+				delete [] data;
+			}
+			return;
+		}
+        --(*inUse);
 
-		if( *inUse == 0 ) {
+		if(!*inUse) {
             delete [] data;
             delete inUse;
         }
@@ -55,7 +59,9 @@ public:
         inUse = AI.inUse;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		if (inUse != 0) (*inUse) += 1;
+		if (inUse) {
+			++(*inUse);
+		}
 	}
  
     AbstractImage& operator=(const AbstractImage& AI) {
@@ -63,7 +69,9 @@ public:
         inUse = AI.inUse;
 		m_width = AI.m_width;
 		m_height = AI.m_height;
-		if (inUse != 0) (*inUse) += 1;
+		if (inUse) {
+			++(*inUse);
+		}
 		return *this;
 	}
  
@@ -78,10 +86,6 @@ public:
 	
 	T& at(int x, int y) {
 		return data[x+y*m_width];
-	}
-
-	const T* scanline(int y) {
-		return data + y*m_width;
 	}
 
 	void fill(const T &val) {
@@ -109,9 +113,9 @@ public:
 			   byte g = grayscale(pix);
 			   
 			   if (g >= thmin) {
-				   bimg.at(x,y) = 255;
+				   bimg[i++] = 255;
 			   } else {
-				   bimg.at(x,y) = 0;
+				   bimg[i++] = 0;
 			   }
 		   }
 		}
