@@ -2,6 +2,8 @@
 
 using namespace std;
 
+Queue* Queue::q =  NULL;
+
 Queue::Queue() : m_mutex(PTHREAD_MUTEX_INITIALIZER) {
 	q = this;
 }

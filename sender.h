@@ -11,14 +11,12 @@
 #include "comicFrames.h"
 #include <vector>
 
-typedef int response;
-
 class Sender {
 public:
 	Sender() {}
 	~Sender() {}
 
-	void sendToClient(std::vector<ComicFrames>& frames, response& res);
+	void sendToClient(std::vector<ComicFrames>& frames, int response);
 };
 
 
