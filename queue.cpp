@@ -2,7 +2,9 @@
 
 using namespace std;
 
-Queue::Queue() : m_mutex(PTHREAD_MUTEX_INITIALIZER) {}
+Queue::Queue() : m_mutex(PTHREAD_MUTEX_INITIALIZER) {
+	q = this;
+}
 
 rawData Queue::dequeue(size_t &size, response& res) {
 	pthread_mutex_lock(&m_mutex);

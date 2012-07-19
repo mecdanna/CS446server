@@ -11,7 +11,7 @@
 #include <queue>
 #include <pthread.h>
 
-typedef void* rawData;
+typedef unsigned char* rawData;
 typedef int response;
 
 class Queue {
@@ -20,11 +20,12 @@ class Queue {
 	std::queue<response> m_response;
 	pthread_mutex_t m_mutex;
 
-
+	static Queue* q;
 public:
 	Queue();
 	~Queue() {}
 
+	static Queue* getQueue() { return q;}
 	void enqueue(rawData data, size_t size, response& res);
 	rawData dequeue(size_t& size, response& res);
 };

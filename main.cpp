@@ -27,7 +27,7 @@ int main(int argc, char **argv) {
 		//check for errors
 	}
 	
-	Receiver receiver(comicQueue);
+	Receiver receiver(80);
 	
 	cout << "Press Enter to stop" << endl;
 	cin.ignore();

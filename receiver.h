@@ -11,15 +11,18 @@
 #include "queue.h"
 
 class Receiver {
-	Queue& queue;
+	int httpd;
+	static bool done;
+	pthread_t thread;
 	
 protected:
-  virtual bool handleEvent();
+	static void handleEvent(int clientSocket);
+	static void* process(void* params);
 	
 public:
 	void start();
 	void stop();
-	Receiver(Queue& queue);
+	Receiver(unsigned short port);
 	~Receiver() {}
 	
 };
