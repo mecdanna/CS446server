@@ -11,6 +11,12 @@
 typedef unsigned int pixel;
 typedef unsigned char byte;
 
+/* 
+ * Very important: STORE IN BGR NOT RGB FORMAT.
+ * pixel = 8.8.8.8 => blue.green.red.nothing (last byte is ignored)
+ */
+
+//If you don't believe it works, go to photoshop and check
 inline byte grayscale(pixel p) {
 	byte red =   (p & 0x0000FF00) >> 8;
 	byte green = (p & 0x00FF0000) >> 16;
@@ -19,16 +25,16 @@ inline byte grayscale(pixel p) {
 	return red * .30 + green * .59 + .11 * blue;
 }
 
-/* 
- * Very important: STORE IN BGR NOT RGB FORMAT.
- * pixel = 8.8.8.8 => blue.green.red.nothing (last byte is ignored)
+/*
+ * This is a generic image which we convert other images into. The alternative was to
+ * make each image type derive from this, but there's a lot of encoding types, and it 
+ * gets really messy that way.
  */
- 
 template <typename T>
 class AbstractImage {
 protected:
-	T* data;
-	short* inUse;
+	T* data; //the actual image bitmap
+	short* inUse; //how many AIs are using the same data, to allow shallow copying
 	unsigned int m_width;
 	unsigned int m_height;
 public:
@@ -41,7 +47,7 @@ public:
 
 	virtual ~AbstractImage() {
         if (!inUse) {
-			if(data) {
+			if(data) { //this could be an assertion, but it's easier to be safe
 				delete [] data;
 			}
 			return;
@@ -102,6 +108,10 @@ public:
 		return m_height;
 	}
 	
+	/*
+	 * Binarizes an image by converting it to 2 colours based on a 
+	 * threshold applied to a greyscale version of the image
+	 */
 	AbstractImage<byte> binarize(byte thmin) {
 		AbstractImage<byte> bimg(m_width, m_height);
 		
