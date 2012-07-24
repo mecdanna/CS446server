@@ -4,6 +4,7 @@
 
 using namespace std;
 
+//encodes frame information in xml and returns it to client via socket response
 void Sender::sendToClient(std::vector<ComicFrames>& frames, int response) {
 	
 	stringstream encode;
