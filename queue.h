@@ -14,6 +14,10 @@
 typedef unsigned char* rawData;
 typedef int response;
 
+/*
+ * Threadsafe queue. Due to [ROT YOU!!!] pthreads limitations, only the latest
+ * queue will be used if more than one exists.
+ */
 class Queue {
 	std::queue<rawData> m_dataQueue;
 	std::queue<size_t> m_size;

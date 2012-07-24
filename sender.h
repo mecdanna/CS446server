@@ -11,6 +11,7 @@
 #include "comicFrames.h"
 #include <vector>
 
+//sends information back to client
 class Sender {
 public:
 	Sender() {}

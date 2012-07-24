@@ -10,6 +10,11 @@
 
 #include "queue.h"
 
+/*
+ * This class receives http requests and enqueues them. It is not
+ * explicitly a singleton, but multiple receivers will interfere
+ * with each other if they run on the same port.
+ */
 class Receiver {
 	int httpd;
 	static bool done;
