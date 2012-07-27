@@ -1,5 +1,5 @@
-#ifndef CONCRETE_IMAGE_H
-#define CONCRETE_IMAGE_H
+#ifndef ABSTRACT_IMAGE_HEADER_H
+#define ABSTRACT_IMAGE_HEADER_H
 
 #include <istream>
 #include <cstdint>    // uint32_t
@@ -9,10 +9,10 @@
 typedef unsigned char byte;
 typedef void* rawPicInMem;
 
+// Abstact Image Header class for processing 
 class AbstractImageHeader {
 
   public:
-    // x86 & x64 use little endian
 	enum Endianness { LITTLEENDIAN , BIGENDIAN };
 	virtual byte* getHeader() = 0;
 	virtual unsigned int getHeaderSize() = 0;
@@ -88,20 +88,5 @@ class PngHeader : public AbstractImageHeader {
 	unsigned int getHeaderSize() { return sizeof(m_header); }
 	Endianness getEndianness() { return BIGENDIAN; }
 };
-
-/*
-class JpgHeader : public AbstractImageHeader {
-
-  private:
-	byte m_header[24];
-
-  public:
-	unsigned int getImageWidth() { return getField(16,4); }
-	unsigned int getImageHeight() { return getField(20,4); }
-	byte* getHeader() { return m_header; }
-	unsigned int getHeaderSize() { return sizeof(m_header); }
-	Endianness getEndianness() { return BIGENDIAN; }
-};
-*/
 
 #endif
