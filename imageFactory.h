@@ -15,6 +15,8 @@ typedef char* rawPic; // file path to pic
 class ImageFactory {
 	void initPic(int w, int h, AbstractImage<pixel>& img, rawPic pic);
 	void FinalizePic(AbstractImage<pixel>& img);
+	
+	// Consumes a relative path to a picture on disk and produces an internal representation
 	AbstractImage<pixel> _PNG(rawPic pic);
 	AbstractImage<pixel> _BMP(rawPic pic);
 	AbstractImage<pixel> _JPEG(rawPic pic);
