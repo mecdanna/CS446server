@@ -273,8 +273,6 @@ int do_extract_currentfile( unzFile uf, const int* popt_extract_without_path,
 
         if (fout!=NULL)
         {
-            //printf(" extracting: %s\n",write_filename);
-
             do
             {
                 err = unzReadCurrentFile(uf,buf,size_buf);
@@ -299,7 +297,7 @@ int do_extract_currentfile( unzFile uf, const int* popt_extract_without_path,
                 change_file_date(write_filename,file_info.dosDate,
                                  file_info.tmu_date);
 
-            // SUUUPER HACK
+
             ImageFactory f = ImageFactory();
             images.push_back(f.makeImage(write_filename,ImageFactory::imageType_BMP));
         }
@@ -354,7 +352,7 @@ int do_extract( unzFile uf, int opt_extract_without_path, int opt_overwrite, con
 
 ImagePreprocessor::ImagePreprocessor(rawData data, ImagePreprocessor::decompressType type, vector<AbstractImage<pixel> >& images) :
 	images(images) {
-        // fixme
+        // CBR not implemented; default to CBZ archive processing
         _CBZ(data);
 }
 
@@ -365,7 +363,8 @@ void ImagePreprocessor::_CBZ(rawData data) {
 
     char filename_try[MAXFILENAME+16] = "";
     strncpy(filename_try, data,MAXFILENAME-1);
-    /* strncpy doesnt append the trailing NULL, of the string is too long. */
+    
+    /* strncpy doesnt append the trailing NULL, if the string is too long. */
     filename_try[ MAXFILENAME ] = '\0';
 
     unzFile uf = unzOpen64(data);
